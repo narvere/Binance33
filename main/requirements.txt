@@ -1,0 +1,12 @@
+flask
+pytz
+flask-script
+flask-wtf
+Flask-Views
+flask_sqlalchemy
+python-binance
+python-dotenv
+flask_migrate
+tradingview_ta
+
+

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% block content%}
+{{ super() }}
+
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+
+
+    <main>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Актив</th>
+                <th scope="col">Количество монет</th>
+                <th scope="col">Sell order</th>
+                <th scope="col">Текущая цена</th>
+                <th scope="col">Цена покупки</th>
+                <th scope="col">USDT</th>
+                <th scope="col">EUR</th>
+                <th scope="col">Прибыль/убыток</th>
+                <th scope="col">TradingView</th>
+                <th scope="col">Chart</th>
+                <th scope="col">Binance</th>
+                <th scope="col">H4 / USDT</th>
+                <th scope="col">D1 / USDT</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for el in my_assets%}
+            {% if el.asset == coin_name %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td><a href="/coin/{{ el.asset }}">{{el.asset}}</a></td>
+                <td>{{el.free}}</td>
+                <td>{{el.locked}}</td>
+                <td>{{el.price}}</td>
+                <td>{{first_pairs_info.price}} {{first_pairs_info.quoteAsset}}</td>
+                <td>$ {{el.total_usd}}</td>
+                <td>€ {{el.total_eur}}</td>
+                <td>{{((el.price - first_pairs_info.price)*(el.free+el.locked))|round(2)}}
+                    {{first_pairs_info.quoteAsset}} ({{((el.price -
+                    first_pairs_info.price)/first_pairs_info.price*100)|round(2)}}%)
+                </td>
+                <td><a target="_blank" rel="noopener noreferrer"
+                       href="https://ru.tradingview.com/symbols/{{ el.asset }}USDT/" class="btn btn-outline-info">TradingView</a>
+                </td>
+                <td><a target="_blank" rel="noopener noreferrer"
+                       href="https://ru.tradingview.com/chart/NxJ5WI0f/?symbol=BINANCE%3A{{ el.asset }}USDT"
+                       class="btn btn-outline-danger">Chart</a></td>
+                <td><a target="_blank" rel="noopener noreferrer"
+                       href="https://www.binance.com/ru/trade/{{ el.asset }}_USDT?layout=basic"
+                       class="btn btn-outline-warning">Binance</a></td>
+                {% block contentx %}
+
+                {% endblock %}
+
+
+                {{ reccomendatsion(el.recommendatsion) }}
+                {{ reccomendatsion(el.recommendatsion_d1) }}
+            </tr>
+            {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Дата покупки</th>
+                <th scope="col">Пара</th>
+                <th scope="col">Цена покупки</th>
+                <th scope="col">Количество монет</th>
+                <th scope="col">Сколько потратил</th>
+                <th scope="col">Комиссия</th>
+                <th scope="col">Текущая цена</th>
+                <th scope="col">binance_id</th>
+                <th scope="col">orderId</th>
+                <th scope="col">Chart</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in ticker_i %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{ i.time_last_trades }}</td>
+                <td>{{ i.symbol }}</td>
+                <td>{{ i.price }} {{ i.quoteAsset }}</td>
+                <td>{{ i.qty }} {{ i.baseAsset }}</td>
+                <td>{{ i.quote_qty }} {{ i.quoteAsset }}</td>
+                <td>{{ i.commis }} {{i.commisAsset}}</td>
+                <td>{{ i.current_price }} {{ i.quoteAsset }}</td>
+                <td>{{ i.binance_id }}</td>
+                <td>{{ i.orderId }}</td>
+                <td><a target="_blank" rel="noopener noreferrer"
+                       href="https://ru.tradingview.com/chart/NxJ5WI0f/?symbol=BINANCE%3A{{ i.symbol }}"
+                       class="btn btn-outline-danger">Chart</a></td>
+
+
+            </tr>
+            {% endfor %}
+
+
+            </tbody>
+        </table>
+
+
+        <br>
+    </main>
+    <footer class="pt-5 my-5 text-muted border-top">
+        Created by the Bootstrap team &middot; &copy; 2021
+    </footer>
+</div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content%}
+{{ super() }}
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Актив</th>
+                            <th scope="col">Hour 4</th>
+                            <th scope="col">Day 1</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in all_pairs %}
+                        {% if loop.index < (all_pairs_count/2)|round %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td><a target="_blank" rel="noopener noreferrer"
+                                   href="https://ru.tradingview.com/chart/NxJ5WI0f/?symbol=BINANCE%3A{{ el.ticker }}"
+                            >{{ el.ticker }}</a></td>
+                            {{ reccomendatsion(el.recommendatsion) }}
+                            {{ reccomendatsion(el.recommendatsion_all_day) }}
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Актив</th>
+                            <th scope="col">Hour 4</th>
+                            <th scope="col">Day 1</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for el in all_pairs %}
+                        {% if loop.index >= (all_pairs_count/2)|round %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td><a target="_blank" rel="noopener noreferrer"
+                                   href="https://ru.tradingview.com/chart/NxJ5WI0f/?symbol=BINANCE%3A{{ el.ticker }}"
+                            >{{ el.ticker }}</a></td>
+                            {{ reccomendatsion(el.recommendatsion) }}
+                            {{ reccomendatsion(el.recommendatsion_all_day) }}
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+    <footer class="pt-5 my-5 text-muted border-top">
+        Created by the Bootstrap team &middot; &copy; 2021
+    </footer>
+</div>
+
+{% endblock %}
